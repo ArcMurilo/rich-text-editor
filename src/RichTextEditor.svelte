@@ -47,6 +47,18 @@
 		controls = controls;
 	}
 
+	function handleHeader() {
+		const selectedControl = getSelectedControl();
+		selectedControl.tag = Tag.Header;
+		controls = controls;
+	}
+
+	function handleParagraph() {
+		const selectedControl = getSelectedControl();
+		selectedControl.tag = Tag.Paragraph;
+		controls = controls;
+	}
+
 	function handleControlSelected(event: CustomEvent) {
 		selectById(event.detail.id);
 	}
@@ -94,6 +106,8 @@
 		<button on:click={handleBold}>Bold</button>
 		<button on:click={handleItalic}>Italic</button>
 		<button on:click={handleUnderscore}>Underscore</button>
+		<button on:click={handleHeader}>Header</button>
+		<button on:click={handleParagraph}>Paragraph</button>
 	</section>
 	
 	<section id="text-editor">

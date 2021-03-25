@@ -3,7 +3,7 @@ export enum Style {
 }
 
 export enum Tag {
-    Paragraph
+    Paragraph, Header
 }
 
 export type ControlType = {

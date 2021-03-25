@@ -1,26 +1,21 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
 
-    import Paragraph from './Paragraph.svelte';
-
     import type { ControlType } from "./Types";
-    import { renderControlClasses } from "./Types";
+    import { Tag, renderControlClasses } from "./Types";
 
     export let control: ControlType;
 
     let controlElement: HTMLElement;
+    let tag: Tag;
 
     function setCursorPosToEnd() {
         if (control.text.length > 0) {
             const setpos = document.createRange();
             const set = window.getSelection();
-
             setpos.setStart(controlElement.childNodes[0], control.text.length);
-
             setpos.collapse();
-
             set.removeAllRanges();
-
             set.addRange(setpos);
         }
     }
@@ -52,6 +47,16 @@
     }
 </script>
 
+{#if control.tag === Tag.Header }
+<h1 bind:this={controlElement}
+   contenteditable="true" 
+   class="{renderControlClasses(control)}"
+   aria-selected="{control.selected}"
+   on:focus="{selectControl}"
+   on:keydown={handleKeyDown}
+   bind:textContent={control.text} >
+</h1>
+{:else}
 <p bind:this={controlElement}
    contenteditable="true" 
    class="{renderControlClasses(control)}"
@@ -59,7 +64,6 @@
    on:focus="{selectControl}"
    on:keydown={handleKeyDown}
    bind:textContent={control.text} >
-
-
 </p>
+{/if}
 
