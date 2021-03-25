@@ -13,6 +13,13 @@
 		return controls.find(c => c.selected);
 	}
 
+	function selectById(id: string) {
+        controls = controls.map(c => {
+			c.selected = c.id === id;
+			return c;
+		});
+    }
+
 	function toggleStyle(control: ControlType, style: Style) {
 		if (control.styles.indexOf(style) >= 0) {
 			control.styles = control.styles.filter(s => s !== style);
@@ -60,16 +67,21 @@
         selectById(lastControl.id);
     }
 
-    function selectById(id: string) {
-        controls = controls.map(c => {
-			c.selected = c.id === id;
-			return c;
-		});
-    }
+
+
+	function handleMainKeyDown(e: KeyboardEvent) {
+		if (e.ctrlKey && e.key.toLowerCase() === "b") {
+			handleBold();
+		}
+		else if (e.ctrlKey && e.key.toLowerCase() === "i") {
+			handleItalic();
+		}
+	}
+    
 
 </script>
 
-<main>
+<main on:keydown={handleMainKeyDown}>
 	<section id="controls">
 		<button on:click={handleBold}>Bold</button>
 		<button on:click={handleItalic}>Italic</button>
