@@ -1,0 +1,107 @@
+<script lang="ts">
+	import type { ControlType } from "./Types";
+	import { Tag, Style } from "./Types";
+	import Control from "./Control.svelte";
+    import { v4 as uuidv4 } from "uuid";
+	
+	let controls: ControlType[] = [
+		{ id: "1", tag: Tag.Paragraph, text: "lalala", styles: [Style.Bold], selected: false},
+		{ id: "2", tag: Tag.Paragraph, text: "lelelele", styles: [], selected: true},
+	]
+
+	function getSelectedControl(): ControlType {
+		return controls.find(c => c.selected);
+	}
+
+	function toggleStyle(control: ControlType, style: Style) {
+		if (control.styles.indexOf(style) >= 0) {
+			control.styles = control.styles.filter(s => s !== style);
+		} else {
+			control.styles = [...control.styles, style];
+		}
+	}
+
+	function handleBold() {
+		const selectedControl = getSelectedControl();
+		toggleStyle(selectedControl, Style.Bold)
+		controls = controls;
+	}
+
+	function handleItalic() {
+		const selectedControl = getSelectedControl();
+		toggleStyle(selectedControl, Style.Italic)
+		controls = controls;
+	}
+
+	function handleControlSelected(event: CustomEvent) {
+		selectById(event.detail.id);
+	}
+
+    function handleFinishEditing(event: CustomEvent) {
+        const newControl: ControlType = {
+            id: uuidv4(),
+            tag: Tag.Paragraph,
+            text: "",
+            styles: [],
+            selected: false
+        };
+
+        controls = [...controls, newControl];
+
+        selectById(newControl.id);
+    }
+
+    function handleRemoveControl(event: CustomEvent) {
+        if (controls.length === 1) return;
+        controls = controls.filter(c => c.id !== event.detail.id);
+        
+        const lastControl = controls[controls.length-1];
+
+        selectById(lastControl.id);
+    }
+
+    function selectById(id: string) {
+        controls = controls.map(c => {
+			c.selected = c.id === id;
+			return c;
+		});
+    }
+
+</script>
+
+<main>
+	<section id="controls">
+		<button on:click={handleBold}>Bold</button>
+		<button on:click={handleItalic}>Italic</button>
+	</section>
+	
+	<section id="text-editor">
+		{#each controls as control}
+			<Control control={control}
+                     on:controlSelected={handleControlSelected}
+                     on:finishEditing={handleFinishEditing}
+                     on:removeControl={handleRemoveControl} />
+		{/each}
+	</section>
+</main>
+
+<style>
+	main {
+		background: rgba(250, 251, 252, 0.85);
+		font-size: 16px;
+		font-family: sans-serif;
+		max-width: 900px;
+		width: 75%;
+		height: 75%;
+		margin: 50px 60px;
+		padding: 10px;
+		border-radius: 3px;
+		
+		box-shadow: 6px 6px 5px rgba(72, 72, 72, 0.75);
+	}
+
+	#controls {
+		padding-bottom: 6px;
+		border-bottom: 1px solid #484848;
+	}
+</style>
