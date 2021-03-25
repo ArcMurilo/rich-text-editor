@@ -40,6 +40,13 @@
 		controls = controls;
 	}
 
+	function handleUnderscore() {
+		const selectedControl = getSelectedControl();
+		if (!selectedControl) return;
+		toggleStyle(selectedControl, Style.Underscore);
+		controls = controls;
+	}
+
 	function handleControlSelected(event: CustomEvent) {
 		selectById(event.detail.id);
 	}
@@ -67,14 +74,15 @@
         selectById(lastControl.id);
     }
 
-
-
 	function handleMainKeyDown(e: KeyboardEvent) {
 		if (e.ctrlKey && e.key.toLowerCase() === "b") {
 			handleBold();
 		}
 		else if (e.ctrlKey && e.key.toLowerCase() === "i") {
 			handleItalic();
+		}
+		else if (e.ctrlKey && e.key.toLowerCase() === "u") {
+			handleUnderscore();
 		}
 	}
     
@@ -85,6 +93,7 @@
 	<section id="controls">
 		<button on:click={handleBold}>Bold</button>
 		<button on:click={handleItalic}>Italic</button>
+		<button on:click={handleUnderscore}>Underscore</button>
 	</section>
 	
 	<section id="text-editor">

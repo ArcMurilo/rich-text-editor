@@ -20,3 +20,7 @@ body {
 .italic {
     font-style: italic;
 }
+
+.underscore {
+    text-decoration: underline;
+}

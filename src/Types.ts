@@ -1,5 +1,5 @@
 export enum Style {
-    Bold, Italic
+    Bold, Italic, Underscore
 }
 
 export enum Tag {
@@ -18,6 +18,7 @@ function styleToCssClass(style: Style): string {
     switch (style) {
         case Style.Bold: return "bold";
         case Style.Italic: return "italic"
+        case Style.Underscore: return "underscore";
     }
 }
 
