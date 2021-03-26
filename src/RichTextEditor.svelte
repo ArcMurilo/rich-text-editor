@@ -5,8 +5,8 @@
     import { v4 as uuidv4 } from "uuid";
 	
 	let controls: ControlType[] = [
-		{ id: "1", tag: Tag.Paragraph, text: "lalala", styles: [Style.Bold], selected: false},
-		{ id: "2", tag: Tag.Paragraph, text: "lelelele", styles: [], selected: true},
+		{ id: "1", tag: Tag.Header, text: "Hello, world!", styles: [], selected: false },
+		{ id: "2", tag: Tag.Paragraph, text: "Rich text Editor sample", styles: [], selected: true },
 	]
 
 	function getSelectedControl(): ControlType {
@@ -47,7 +47,7 @@
 		controls = controls;
 	}
 
-	function handleHeader() {
+	function handleTitle() {
 		const selectedControl = getSelectedControl();
 		selectedControl.tag = Tag.Header;
 		controls = controls;
@@ -97,17 +97,16 @@
 			handleUnderscore();
 		}
 	}
-    
 
 </script>
 
 <main on:keydown={handleMainKeyDown}>
 	<section id="controls">
-		<button on:click={handleBold}>Bold</button>
-		<button on:click={handleItalic}>Italic</button>
-		<button on:click={handleUnderscore}>Underscore</button>
-		<button on:click={handleHeader}>Header</button>
-		<button on:click={handleParagraph}>Paragraph</button>
+		<button on:click={handleBold}><span class="oi" data-glyph="bold"></span></button>
+		<button on:click={handleItalic}><span class="oi" data-glyph="italic"></span></button>
+		<button on:click={handleUnderscore}><span class="oi" data-glyph="underline"></span></button>
+		<button on:click={handleTitle}><span class="oi" data-glyph="header"></span></button>
+		<button on:click={handleParagraph}><span class="oi" data-glyph="text"></span></button>
 	</section>
 	
 	<section id="text-editor">
@@ -138,5 +137,17 @@
 	#controls {
 		padding-bottom: 6px;
 		border-bottom: 1px solid #484848;
+	}
+
+	button {
+		border: 0px;
+		padding: 5px;
+		background: transparent;
+	}
+
+	button:hover {
+		border: 0px;
+		padding: 5px;
+		background: rgba(220, 222, 248, 0.8);
 	}
 </style>

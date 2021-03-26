@@ -7,7 +7,6 @@
     export let control: ControlType;
 
     let controlElement: HTMLElement;
-    let tag: Tag;
 
     function setCursorPosToEnd() {
         if (control.text.length > 0) {
